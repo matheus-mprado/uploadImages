@@ -18,14 +18,18 @@ type Image = {
 
 type Response = {
   data: Image[];
-  after: string;
+  after: number | null;
 };
 
 export default function Home(): JSX.Element {
-  async function fetchPages({ pageParam = null }): Promise<Response> {
-    const response = await api.get('/api/images');
-    return response.data;
-  }
+  const getImages = async ({ pageParam = null }): Promise<Response> => {
+    const { data } = await api.get('/api/images', {
+      params: {
+        after: pageParam || 0,
+      },
+    });
+    return data;
+  };
 
   const {
     data,
@@ -34,13 +38,15 @@ export default function Home(): JSX.Element {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery('images', fetchPages, {
-    getNextPageParam: lastPage => lastPage.after,
+  } = useInfiniteQuery<unknown, unknown, Response>('images', getImages, {
+    getNextPageParam: (lastPage: { after: number }) => lastPage.after,
   });
 
   const formattedData = useMemo(() => {
-    return data ? data.pages.map(page => page.data).flat() : [];
+    return data?.pages.map(page => page.data).flat();
   }, [data]);
+
+  console.log(formattedData);
 
   if (isLoading) {
     return <Loading />;
