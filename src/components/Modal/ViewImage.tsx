@@ -22,9 +22,15 @@ export function ModalViewImage({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent bgColor="pGray.600">
+      <ModalContent bgColor="pGray.600" mx={['4', 0]}>
         <ModalBody px="0" py="0" w="100%">
-          <Image src={imgUrl} objectFit="cover" h="100%" maxW={900} w="100%" />
+          <Image
+            src={imgUrl}
+            objectFit="cover"
+            h="100%"
+            maxW={['100%', 900]}
+            w="100%"
+          />
         </ModalBody>
 
         <ModalFooter justifyContent="flex-start">

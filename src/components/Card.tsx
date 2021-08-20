@@ -27,7 +27,7 @@ export function Card({ data, viewImage }: CardProps): JSX.Element {
   return (
     <Box key={data.ts} borderRadius="md" bgColor="pGray.800">
       <Skeleton isLoaded={!isLoading}>
-        <Flex h="17.5rem" w="100%" bg="red" borderTopRadius="md">
+        <Flex h={['10rem', '17.5rem']} w="100%" borderTopRadius="md">
           <Image
             src={data.url}
             alt={data.title}
@@ -41,16 +41,16 @@ export function Card({ data, viewImage }: CardProps): JSX.Element {
         </Flex>
       </Skeleton>
 
-      <Box pt={5} pb={4} px={6}>
+      <Box pt={5} pb={4} px={[4, 6]}>
         {isLoading ? (
           <>
-            <SkeletonText fontSize="2xl" mt={2} noOfLines={1} />
-            <SkeletonText fontSize="md" mt={7} noOfLines={1} />
+            <SkeletonText fontSize={['md', '2xl']} mt={2} noOfLines={1} />
+            <SkeletonText fontSize={['sm', 'md']} mt={7} noOfLines={1} />
           </>
         ) : (
           <>
-            <Heading fontSize="2xl">{data.title}</Heading>
-            <Text mt={2.5} fontSize="md">
+            <Heading fontSize={['md', '2xl']}>{data.title}</Heading>
+            <Text mt={2.5} fontSize={['sm', 'md']}>
               {data.description}
             </Text>
           </>
